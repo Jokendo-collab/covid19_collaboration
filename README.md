@@ -1,2 +1,2 @@
 # University of Free state collaboration SARS-COV-2 analysis scripts
-This repo contain the scrips I used to analyze SARS-COV-2 variants from the republic of South Africa. 
+The scripts used in the analysis of SARS-COV-2 variants in South Africa are all going to be deposited here. 
