@@ -99,9 +99,13 @@ ggplot(vaNtdata, aes(Infected_individuals, Variant_type, color = Wave,size = Inf
   xlab("Number of infected individuals") +
   ylab("Variant types") 
 
+#====================================
+p1 <- ggplot(vaNtdata, aes(Infected_individuals,Variant_type,fill=Variant_type)) + 
+  geom_point() + theme_cowplot()
+p2 <- ggplot(vaNtdata, aes(Wave,Variant_type,fill=Variant_type)) +
+  geom_point() + theme_cowplot()
 
-
-
+plot_grid(p1, p2, labels = c('A', 'B'), label_size = 12)
 
 #What variants are common and different
 # List of items
@@ -121,6 +125,33 @@ biovenn <- draw.venn(First_wave, Second_wave, Third_wave,
                      xtitle = "First wave",
                      ytitle = "Second wave",
                      ztitle = "Third wave")
+
+#Variant name and variant class analysis
+setwd("C:\\Users\\Javan\\Desktop\\UFS_collaboration\\variantYpes")
+f1varname = read.csv("thirdwavevariantTypes.csv",header = T, sep = ',')
+f1varname
+
+f1varname = select(f1varname,varname) #grab the varname column
+
+df = table(f1varname$varname) #create the table with frequency of observations
+
+df = as.data.frame(df) #convert the table into a dataframe
+
+df = subset(df,Freq >= 200 ) ;dim(df)
+
+names(df)[1] = "Variant_name"
+names(df)[2] = "Frequency"
+
+#write.csv(df,"first_wave.csv") #Write the summarized variant types
+
+# Barplot
+ggplot(df, aes(x=Variant_name, y=Frequency,fill=Variant_name)) + 
+  geom_bar(stat = "identity") + coord_flip() + 
+  theme_cowplot()+
+  ggtitle("Third wave viral mutation types")+
+  xlab("Viral protein mutations") +
+  ylab("Mutations frequency")+
+  theme(axis.text = element_text(size = 8)) 
 
 
 
