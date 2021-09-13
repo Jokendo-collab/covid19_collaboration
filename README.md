@@ -3,3 +3,8 @@ The scripts used in the analysis of SARS-COV-2 variants in South Africa are all 
 ## Sample number analysis
 |Wave|sample number|
 |---|----|
+|Fires|176|
+|---|----|
+|Second| 145|
+|---|----|
+|Third|450|
