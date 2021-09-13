@@ -1,6 +1,6 @@
-# University of Free state collaboration SARS-COV-2 analysis scripts
+## University of Free state collaboration SARS-COV-2 variants analysis
 The scripts used in the analysis of SARS-COV-2 variants in South Africa are all going to be deposited here. 
-## Sample number analysis
+### Sample number analysis
 |Wave|sample number|
 |---|----|
 |First|176|
