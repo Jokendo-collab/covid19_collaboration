@@ -5,6 +5,8 @@ library(ggplot2)
 library(ggVennDiagram)
 library(BioVenn)
 library(cowplot)
+library(viridis)
+library(hrbrthemes)
 #Load the first wave data
 firstwave = read.csv("firstwave_March2020-October2020.csv",header = T, sep = ',')
 firstwave
@@ -83,13 +85,21 @@ vaNtdata = read.csv("first_wave.csv",header = T,sep = ',')
 
 # minimal horizontal grid theme
 ggplot(vaNtdata, aes(Infected_individuals, fill = Variant_type)) + 
-  geom_density(alpha = 5) +
+  geom_boxplot() +
   scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
   theme_cowplot()+
   ggtitle("Variant type classification by waves")+
   xlab("Number of infected individuals") +
-  ylab("Density") 
-
+  ylab("Density")
+#=============================
+# Stacked 
+ggplot(vaNtdata, aes(fill=Wave, y=Infected_individuals, x=Variant_type)) + 
+  geom_bar(position="stack", stat="identity") + 
+  theme_cowplot() +
+  ylab("Number of infected individuals") +
+  facet_wrap(~Wave) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  theme(axis.text = element_text(size = 8))
 
 #variants classification by waves
 ggplot(vaNtdata, aes(Infected_individuals, Variant_type, color = Wave,size = Infected_individuals)) + 
@@ -128,8 +138,8 @@ biovenn <- draw.venn(First_wave, Second_wave, Third_wave,
 
 #Variant name and variant class analysis
 setwd("C:\\Users\\Javan\\Desktop\\UFS_collaboration\\variantYpes")
-f1varname = read.csv("thirdwavevariantTypes.csv",header = T, sep = ',')
-f1varname
+f1varname = read.csv("firstWaveVariantTypes.csv",header = T, sep = ',')
+f1varname = na.omit(f1varname)
 
 f1varname = select(f1varname,varname) #grab the varname column
 
@@ -137,7 +147,7 @@ df = table(f1varname$varname) #create the table with frequency of observations
 
 df = as.data.frame(df) #convert the table into a dataframe
 
-df = subset(df,Freq >= 200 ) ;dim(df)
+df = subset(df,Freq >= 15 ) ;dim(df)
 
 names(df)[1] = "Variant_name"
 names(df)[2] = "Frequency"
@@ -148,10 +158,27 @@ names(df)[2] = "Frequency"
 ggplot(df, aes(x=Variant_name, y=Frequency,fill=Variant_name)) + 
   geom_bar(stat = "identity") + coord_flip() + 
   theme_cowplot()+
-  ggtitle("Third wave viral mutation types")+
+  ggtitle(" ")+
   xlab("Viral protein mutations") +
   ylab("Mutations frequency")+
   theme(axis.text = element_text(size = 8)) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
